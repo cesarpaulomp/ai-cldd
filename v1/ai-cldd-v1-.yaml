@@ -1,0 +1,187 @@
+ai-cldd_version: 1.0
+
+name: ai-cldd
+full_name: AI Change-Log Driven Development
+
+purpose: >
+Define a standard process for AI-assisted software development
+based on System Base documents, Feature Use Cases, and immutable change logs.
+This file defines how AI agents must interpret, apply, and record changes.
+
+author: Paulo César Medeiros Porto
+
+language: en-US
+
+================================================================
+
+OPERATING_MODE:
+
+description: >
+AI agents operating under ai-cldd must follow a strict sequence:
+read context, apply intent, and register applied changes.
+No feature may be implemented without an associated Use Case
+and a corresponding change-log.
+
+mandatory_steps:
+- load_system_base
+- validate_use_case
+- apply_feature
+- generate_change_log
+- validate_checksum
+
+================================================================
+
+DIRECTORY_STRUCTURE:
+
+root_folder: ai-cldd
+
+docs:
+path: ai-cldd/docs
+purpose: >
+Stores all intent documents.
+Includes SYSTEM_BASE and FEATURE documents.
+allowed_prefixes:
+- SB-
+- UC-
+
+change_logs:
+path: ai-cldd/change-logs
+purpose: >
+Stores immutable records of changes applied by AI agents.
+One change-log per applied UC or SB.
+file_format: yaml
+
+================================================================
+
+DOCUMENT_TYPES:
+
+system_base:
+prefix: SB-
+description: >
+Defines global system rules, technologies, constraints,
+architecture, and communication standards.
+priority: highest
+mandatory: true
+override_policy: >
+Takes precedence over any FEATURE UC unless explicitly overridden
+by a newer SYSTEM_BASE document.
+
+feature:
+prefix: UC-
+description: >
+Defines behavior changes or additions to the system.
+dependency_rules:
+- must_reference_system_base
+- must_not_override_constraints
+
+================================================================
+
+SYSTEM_BASE_RULES:
+
+required: true
+
+loading_policy: >
+All FEATURE UCs must be interpreted and applied together
+with the active SYSTEM_BASE document.
+
+conflict_resolution: >
+In case of conflict, SYSTEM_BASE rules always take precedence.
+
+================================================================
+
+FEATURE_RULES:
+
+application_policy: >
+A FEATURE UC may only be applied if:
+- A SYSTEM_BASE document is present
+- The FEATURE UC explicitly declares SYSTEM_BASE as context
+
+scope_policy: >
+FEATURE UCs define behavior, not global standards.
+
+================================================================
+
+CHANGE_LOG_POLICY:
+
+required: true
+
+one_to_one_mapping: >
+Each applied SYSTEM_BASE or FEATURE document
+MUST generate exactly one change-log file.
+
+file_naming:
+pattern: "<DOCUMENT_ID>.yaml"
+examples:
+- SB-000.yaml
+- UC-002.yaml
+
+immutable: true
+
+================================================================
+
+CHANGE_LOG_SCHEMA:
+
+required_fields:
+- document_id
+- document_type
+- checksum
+- applied_at
+- applied_by
+- changes
+
+document_type_allowed:
+- SYSTEM_BASE
+- FEATURE
+
+checksum_policy:
+algorithm: sha256
+source: >
+The checksum must be calculated from the full content
+of the document in ai-cldd/docs at the time of application.
+
+================================================================
+
+CHANGE_LOG_EXAMPLE:
+
+document_id: UC-002
+document_type: FEATURE
+checksum: sha256:xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+applied_at: YYYY-MM-DD
+applied_by: ai-agent:gpt-5
+changes:
+- created_endpoint: POST /v1/game/start
+- created_endpoint: PATCH /v1/game/complete
+- added_redis_key: game:status
+
+================================================================
+
+AI_AGENT_BEHAVIOR:
+
+forbidden_actions:
+- apply_changes_without_use_case
+- modify_system_base_without_new_document
+- generate_change_log_without_applying_changes
+- apply_feature_if_checksum_mismatch
+
+mandatory_actions:
+- respect_all_constraints
+- generate_descriptive_change_logs
+- maintain_traceability
+
+================================================================
+
+PROMPT_USAGE_GUIDELINE:
+
+instruction_to_developer: >
+This file must be referenced in the AI prompt.
+The AI agent must be explicitly instructed to operate
+according to ai-cldd rules defined in this file.
+
+example_prompt_snippet: >
+"Use ai-cldd-v1.yaml as the operational standard.
+Follow all rules defined for SYSTEM_BASE, FEATURE,
+and change-log generation."
+
+================================================================
+
+END_OF_SPEC: ai-cldd-v1
