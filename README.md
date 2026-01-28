@@ -106,7 +106,6 @@ Change logs are:
 
 The ai-cldd standard expects the following structure inside a project:
 
-```
 /ai-cldd
   /docs
     SB-000 - System Base.md
@@ -119,7 +118,33 @@ The ai-cldd standard expects the following structure inside a project:
     UC-002.yaml
 
   ai-cldd-v1.yaml
-```
+
+---
+
+## Specification version
+
+This repository currently defines **ai-cldd version 1.0**.
+
+The file `ai-cldd-v1.yaml` is the authoritative specification
+that defines how AI agents must operate under the ai-cldd standard.
+
+Future versions of the specification will be versioned explicitly
+(e.g. ai-cldd-v2.yaml).
+
+---
+
+## Examples
+
+This repository includes example files to demonstrate how ai-cldd
+should be applied in real projects.
+
+Examples include:
+- SYSTEM_BASE document examples (SB-*)
+- FEATURE Use Case examples (UC-*)
+- Change-log examples generated from applied documents
+
+These files are **examples only** and should be adapted
+to each project context.
 
 ---
 
@@ -138,30 +163,30 @@ This file **must be copied into the project** and **explicitly referenced in the
 
 Example instruction to AI:
 
-> “Operate according to ai-cldd-v1.yaml.  
-> Apply only documented intent and generate the required change logs.”
+Operate according to ai-cldd-v1.yaml.
+Apply only documented intent and generate the required change logs.
 
 ---
 
 ## How ai-cldd is used in practice
 
-1. Write or update a SYSTEM_BASE document (`SB-*`)
-2. Write a FEATURE document (`UC-*`)
-3. Place documents in `ai-cldd/docs`
+1. Write or update a SYSTEM_BASE document (SB-*)
+2. Write a FEATURE document (UC-*)
+3. Place documents in ai-cldd/docs
 4. Ask the AI to apply the FEATURE
 5. The AI:
    - Reads SYSTEM_BASE
    - Applies the FEATURE
-   - Generates a change-log in `ai-cldd/change-logs`
+   - Generates a change-log in ai-cldd/change-logs
 
 ---
 
 ## What ai-cldd is NOT
 
-- Not a framework  
-- Not a methodology like Scrum or Kanban  
-- Not a prompt library  
-- Not language- or stack-dependent  
+- Not a framework
+- Not a methodology like Scrum or Kanban
+- Not a prompt library
+- Not language- or stack-dependent
 
 ai-cldd is a **design standard for AI-assisted development**.
 
