@@ -1,0 +1,39 @@
+# Build artifacts
+**/target/
+**/build/
+**/out/
+
+# Maven wrapper cache (keep wrapper scripts and JAR)
+.mvn/timing.properties
+
+# Logs
+*.log
+logs/
+
+# Java binaries and packaged files
+*.class
+*.jar
+*.war
+*.ear
+
+# IDEs and editors
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# Environment files
+.env
+.env.*

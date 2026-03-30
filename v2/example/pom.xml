@@ -19,6 +19,11 @@
 
     <properties>
         <java.version>25</java.version>
+        <liquibase.version>4.31.1</liquibase.version>
+        <liquibase.changeLogFile>src/main/resources/liquibase/db.changelog-master.xml</liquibase.changeLogFile>
+        <liquibase.url>${env.DB_URL}</liquibase.url>
+        <liquibase.username>${env.DB_USERNAME}</liquibase.username>
+        <liquibase.password>${env.DB_PASSWORD}</liquibase.password>
     </properties>
 
     <dependencies>
@@ -50,6 +55,10 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -61,6 +70,17 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.version}</version>
+                <configuration>
+                    <changeLogFile>${liquibase.changeLogFile}</changeLogFile>
+                    <url>${liquibase.url}</url>
+                    <username>${liquibase.username}</username>
+                    <password>${liquibase.password}</password>
+                </configuration>
             </plugin>
         </plugins>
     </build>
