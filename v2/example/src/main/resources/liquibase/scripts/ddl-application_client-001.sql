@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS application_client (
+    id UUID PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    client_secret VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL
+);
