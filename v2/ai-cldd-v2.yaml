@@ -1,0 +1,189 @@
+ai-cldd_version: 2.0
+
+name: ai-cldd
+full_name: AI Change-Log Driven Development
+
+purpose: >
+  Define a simplified and traceable standard for AI-assisted development.
+  Version 2 introduces immutable System Base documents, Feature files (FTR),
+  and prompt-driven changes with mandatory change-log generation.
+
+author: Paulo César Medeiros Porto
+language: en-US
+
+================================================================
+
+CORE_PRINCIPLES:
+
+- No change without traceability
+- System rules are immutable
+- Only System Base documents may change system-wide rules
+- All AI actions must generate a change-log
+
+================================================================
+
+OPERATING_MODES:
+
+supported_inputs:
+- system_base_file
+- feature_file
+- direct_prompt
+
+execution_flow:
+  - load_active_system_base
+  - validate_input
+  - apply_changes_respecting_SB
+  - generate_change_log
+  - persist_immutable_record
+
+================================================================
+
+DIRECTORY_STRUCTURE:
+
+root_folder: ai-cldd
+
+docs:
+  path: ai-cldd/docs
+  allowed_prefixes:
+    - SB-
+    - FTR-
+
+change_logs:
+  path: ai-cldd/change-logs
+  file_format: markdown
+  file_naming_pattern: "CL-{YYYY-MM-DD-HH-mm}.md"
+
+================================================================
+
+DOCUMENT_TYPES:
+
+system_base:
+  prefix: SB-
+  immutable: true
+  description: >
+    Defines global architecture, technologies, constraints and standards.
+  rules:
+    - Cannot be modified once created
+    - New global rules require a new SB document
+    - Takes precedence over all other inputs
+
+feature:
+  prefix: FTR-
+  description: >
+    Defines business rules and implementation details.
+    Must comply with all active SB documents.
+
+================================================================
+
+SYSTEM_BASE_POLICY:
+
+immutability: enforced
+
+override_policy: >
+  No FTR file or prompt may override rules defined in SB documents.
+  Only a newer SB document may introduce new global rules.
+
+versioning_policy: >
+  Changes to architecture, technologies, or global constraints
+  must be written as a new SB file (e.g., SB-002).
+
+================================================================
+
+FEATURE_POLICY:
+
+purpose: >
+  FTR files define business rules and technical details
+  within the constraints of active SB documents.
+
+restriction_rules:
+  - Must not override SB constraints
+  - Must declare dependency on SB context
+
+================================================================
+
+DIRECT_PROMPT_POLICY:
+
+allowed: true
+
+description: >
+  Developers may use direct prompts without creating an FTR file.
+  However, the AI must generate a change-log including:
+  - The full prompt text
+  - Interpretation of the prompt
+  - Applied changes
+  - Validation against SB rules
+
+================================================================
+
+CHANGE_LOG_POLICY:
+
+required: true
+format: markdown
+file_naming_pattern: "CL-{YYYY-MM-DD-HH-mm}.md"
+immutable: true
+
+required_sections:
+  - source_type
+  - source_reference
+  - applied_at
+  - applied_by
+  - affected_files
+  - summary_of_changes
+  - SB_validation_status
+
+================================================================
+
+CHANGE_LOG_EXAMPLE:
+
+# Change Log
+
+source_type: PROMPT
+applied_at: 2026-03-30 14:22
+applied_by: ai-agent:gpt-5
+
+## Source
+
+Create a POST endpoint to start a new game session.
+
+## SB Validation
+
+No SB violations detected.
+
+## Changes Applied
+
+- Created POST /v1/game/start
+- Added validation middleware
+- Added Redis key game:session:{id}
+
+================================================================
+
+AI_AGENT_BEHAVIOR:
+
+forbidden_actions:
+  - override_SB_rules
+  - modify_existing_SB_file
+  - apply_changes_without_change_log
+  - ignore_SB_constraints
+
+mandatory_actions:
+  - always_load_SB_context
+  - validate_against_SB
+  - generate_detailed_change_log
+  - maintain_immutability
+
+================================================================
+
+PROMPT_USAGE_GUIDELINE:
+
+instruction_to_developer: >
+  Always instruct the AI to operate under ai-cldd-v2.yaml.
+  Explicitly require SB validation and change-log generation.
+
+example_prompt_snippet: >
+  Operate under ai-cldd-v2.yaml.
+  Validate against SB documents.
+  Generate a CL file.
+
+================================================================
+
+END_OF_SPEC: ai-cldd-v2
